@@ -1,12 +1,11 @@
-package ru.netology.Page;
+package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import lombok.val;
-import ru.netology.Data.UserData;
+import ru.netology.data.UserData;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+
 
 public class VerificationPage {
 
@@ -23,12 +22,4 @@ public class VerificationPage {
         codeField.shouldBe(Condition.visible);
     }
 
-    public static void openPersonalAccount() {
-        open("http://localhost:9999");
-        val loginPage = new LoginPage();
-        val authInfo = UserData.getAuthInfo();
-        val verificationPage = loginPage.validLogin(authInfo);
-        val verificationCode = UserData.getCode(authInfo);
-        verificationPage.validVerify(verificationCode);
-    }
 }

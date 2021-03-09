@@ -1,7 +1,9 @@
-package ru.netology.Page;
+package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class MoneyTransferPage {
@@ -22,6 +24,10 @@ public class MoneyTransferPage {
         fromCard.setValue(cardNumber);
         button.click();
         return new DashBoard();
+    }
+
+    public void showErrorMessage() {
+        $(withText("Ошибка")).shouldBe(Condition.visible);
     }
 
 }

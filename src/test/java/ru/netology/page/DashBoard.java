@@ -1,4 +1,4 @@
-package ru.netology.Page;
+package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
@@ -10,7 +10,8 @@ public class DashBoard {
     private SelenideElement db = $("[data-test-id = dashboard]");
     private SelenideElement balance1 = $$(withText("баланс")).get(0);
     private SelenideElement balance2 = $$(withText("баланс")).get(1);
-
+    private SelenideElement buttonTransferToFirstCard = $("[data-test-id = action-deposit]");
+    private SelenideElement buttonTransferToSecondCard = $$("[data-test-id = action-deposit]").get(1);
 
     public DashBoard() {
         db.shouldBe(Condition.visible);
@@ -32,4 +33,13 @@ public class DashBoard {
         return findBalance(text);
     }
 
+    public MoneyTransferPage getTransferToFirstCard() {
+        buttonTransferToFirstCard.click();
+        return new MoneyTransferPage();
+    }
+
+    public MoneyTransferPage getTransferToSecondCard() {
+        buttonTransferToSecondCard.click();
+        return new MoneyTransferPage();
+    }
 }

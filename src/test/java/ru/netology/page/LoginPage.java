@@ -1,7 +1,7 @@
-package ru.netology.Page;
+package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.Data.UserData;
+import ru.netology.data.UserData;
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
