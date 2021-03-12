@@ -56,48 +56,38 @@ public class MoneyTransferTest {
         assertEquals(balance2 + transferAmount, newBalance2);
     }
 
-    //проверка возможности уйти в минус
+
     @Test
-    void shouldSuccessTransferWhenInsufficientFunds() {
+    void shouldNotSuccessTransferWhenInsufficientFunds() {
         val dashboard = openPersonalAccount();
         val balance1 = dashboard.getFirstCardBalance();
         val balance2 = dashboard.getSecondCardBalance();
         val transferAmount = Math.abs(balance1 * 2);
         val transferPage = dashboard.getTransferToSecondCard();
         transferPage.getTransfer(String.valueOf(transferAmount), CardData.firstCard.getCardId());
-        val newBalance1 = dashboard.getFirstCardBalance();
-        val newBalance2 = dashboard.getSecondCardBalance();
-        assertEquals(balance1 - transferAmount, newBalance1);
-        assertEquals(balance2 + transferAmount, newBalance2);
-    }
-
-    //проверка возможности перевода суммы равной 0
-    @Test
-    void shouldSuccessTransferWithZeroTransferAmount() {
-        val dashboard = openPersonalAccount();
-        val balance1 = dashboard.getFirstCardBalance();
-        val balance2 = dashboard.getSecondCardBalance();
-        val transferAmount = 0;
-        val transferPage = dashboard.getTransferToSecondCard();
-        transferPage.getTransfer(String.valueOf(transferAmount), CardData.firstCard.getCardId());
-        val newBalance1 = dashboard.getFirstCardBalance();
-        val newBalance2 = dashboard.getSecondCardBalance();
-        assertEquals(balance1 - transferAmount, newBalance1);
-        assertEquals(balance2 + transferAmount, newBalance2);
-    }
-
-    //проверка возможности перевода без ввода суммы
-    @Test
-    void shouldSuccessTransferWithEmptyTransferAmountField() {
-        val dashboard = openPersonalAccount();
-        val balance1 = dashboard.getFirstCardBalance();
-        val balance2 = dashboard.getSecondCardBalance();
-        val transferPage = dashboard.getTransferToSecondCard();
-        transferPage.getTransfer("", CardData.firstCard.getCardId());
+        transferPage.showErrorMessage();
         val newBalance1 = dashboard.getFirstCardBalance();
         val newBalance2 = dashboard.getSecondCardBalance();
         assertEquals(balance1, newBalance1);
         assertEquals(balance2, newBalance2);
+    }
+
+
+    @Test
+    void shouldNotSuccessTransferWithZeroTransferAmount() {
+        val dashboard = openPersonalAccount();
+        val transferPage = dashboard.getTransferToSecondCard();
+        transferPage.getTransfer(String.valueOf(0), CardData.firstCard.getCardId());
+        transferPage.showErrorMessage();
+    }
+
+
+    @Test
+    void shouldNotSuccessTransferWithEmptyTransferAmountField() {
+        val dashboard = openPersonalAccount();
+        val transferPage = dashboard.getTransferToSecondCard();
+        transferPage.getTransfer("", CardData.firstCard.getCardId());
+        transferPage.showErrorMessage();
     }
 
 
